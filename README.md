@@ -6,9 +6,12 @@ Every model request uses `fortanix/glm-5.3-flash` at `https://api.trustedrouter.
 with `provider.only: ["fortanix"]` and `allow_fallbacks: false`. Other models and
 providers are rejected. Native tool calls and streaming are preserved.
 
-This is a separate terminal-agent variant, not the signed Trusted Cowork desktop
-release. It does not change that app or its profile. No signed Fortanix Code
-desktop package is published yet.
+Fortanix Code includes a separate desktop app and terminal launcher. The desktop
+uses its own `com.trustedrouter.fortanixcode` application identity and profile,
+browser sign-in, OS-encrypted credentials, and explicit tool approvals. It does
+not replace Trusted Cowork or read its saved credentials. Desktop version
+`0.1.0-alpha.1` is undergoing signing and notarization; only verified artifacts
+will be published as downloads.
 
 ## Run Fortanix Code
 

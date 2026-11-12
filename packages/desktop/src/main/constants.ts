@@ -9,18 +9,18 @@ export const CHANNEL: Channel = raw === "local" || raw === "dev" || raw === "bet
 export const VERSION = app.isPackaged ? app.getVersion() : (process.env.OPENCODE_VERSION ?? app.getVersion())
 
 const appNames: Record<string, string> = {
-  dev: "Trusted Cowork Dev",
-  beta: "Trusted Cowork Beta",
-  prod: "Trusted Cowork",
+  dev: "Fortanix Code Dev",
+  beta: "Fortanix Code Beta",
+  prod: "Fortanix Code",
 }
 
 const appIDs: Record<string, string> = {
-  dev: "com.trustedrouter.cowork.opencodedev",
-  beta: "com.trustedrouter.cowork.opencodebeta",
-  prod: "com.trustedrouter.cowork.opencodedesktop",
+  dev: "com.trustedrouter.fortanixcode.dev",
+  beta: "com.trustedrouter.fortanixcode.beta",
+  prod: "com.trustedrouter.fortanixcode",
 }
 
 // Local renderer/server mode keeps the dev application identity.
-export const APP_NAME = app.isPackaged ? appNames[CHANNEL] : "Trusted Cowork Dev"
+export const APP_NAME = app.isPackaged ? appNames[CHANNEL] : "Fortanix Code Dev"
 
-export const APP_ID = app.isPackaged ? appIDs[CHANNEL] : "com.trustedrouter.cowork.opencodedev"
+export const APP_ID = app.isPackaged ? appIDs[CHANNEL] : "com.trustedrouter.fortanixcode.dev"

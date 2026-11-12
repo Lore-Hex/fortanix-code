@@ -1,7 +1,7 @@
 import { DESKTOP_NATIVE_ENGLISH } from "./desktop-native"
 
 export const dict = {
-  "cowork.name": "Trusted CoWork",
+  "cowork.name": "Fortanix Code",
   "cowork.signIn": "Sign in",
   "cowork.waiting": "Waiting for sign-in",
   "cowork.cancel": "Cancel",

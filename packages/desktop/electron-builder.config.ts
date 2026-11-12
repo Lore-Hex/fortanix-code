@@ -64,9 +64,9 @@ function resolveChannel() {
 }
 
 const APP_IDS = {
-  dev: "com.trustedrouter.cowork.opencodedev",
-  beta: "com.trustedrouter.cowork.opencodebeta",
-  prod: "com.trustedrouter.cowork.opencodedesktop",
+  dev: "com.trustedrouter.fortanixcode.dev",
+  beta: "com.trustedrouter.fortanixcode.beta",
+  prod: "com.trustedrouter.fortanixcode",
 } as const
 
 const getBase = (appId: string): Configuration => {
@@ -177,8 +177,8 @@ const getBase = (appId: string): Configuration => {
       target: ["dmg", "zip"],
     },
     protocols: {
-      name: "Trusted Cowork",
-      schemes: ["trcc"],
+      name: "Fortanix Code",
+      schemes: ["fortanix-code"],
     },
     win: {
       icon: `resources/icons/icon.ico`,
@@ -221,7 +221,7 @@ export function getConfig() {
       return {
         ...base,
         appId,
-        productName: "Trusted Cowork Dev",
+        productName: "Fortanix Code Dev",
         deb: { fpm: [metainfoFpm(appId)] },
         rpm: { packageName: "opencode-dev", fpm: [metainfoFpm(appId)] },
       }
@@ -231,12 +231,12 @@ export function getConfig() {
       return {
         ...base,
         appId,
-        productName: "Trusted Cowork Beta",
-        protocols: { name: "Trusted Cowork", schemes: ["trcc"] },
+        productName: "Fortanix Code Beta",
+        protocols: { name: "Fortanix Code", schemes: ["fortanix-code"] },
         publish: {
           provider: "github",
           owner: "Lore-Hex",
-          repo: "confidential-cowork-desktop",
+          repo: "fortanix-code",
           channel: "latest",
         },
         deb: { fpm: [metainfoFpm(appId)] },
@@ -248,12 +248,12 @@ export function getConfig() {
       return {
         ...base,
         appId,
-        productName: "Trusted Cowork",
-        protocols: { name: "Trusted Cowork", schemes: ["trcc"] },
+        productName: "Fortanix Code",
+        protocols: { name: "Fortanix Code", schemes: ["fortanix-code"] },
         publish: {
           provider: "github",
           owner: "Lore-Hex",
-          repo: "confidential-cowork-desktop",
+          repo: "fortanix-code",
           channel: "latest",
         },
         deb: { fpm: [metainfoFpm(appId), legacyDesktopEntryFpm] },

@@ -57,7 +57,7 @@ export class TrustedRouterSignIn {
       const callback = new URL(`http://${host}/trcc/oauth`)
       const authorization = await new TrustedRouter({
         controlBaseUrl: "https://trustedrouter.com",
-      }).createOAuthAuthorization({ callbackUrl: callback.href, keyLabel: "Trusted Cowork" })
+      }).createOAuthAuthorization({ callbackUrl: callback.href, keyLabel: "Fortanix Code" })
       const expected = Buffer.from(authorization.state ?? "")
       const code = await new Promise<string>((resolve, reject) => {
         const abort = () => reject(new Error("Sign-in cancelled or timed out"))
@@ -97,7 +97,7 @@ export class TrustedRouterSignIn {
             reject(new Error("Sign-in was not approved"))
             return
           }
-          response.end("Return to Trusted Cowork. You can close this tab.")
+          response.end("Return to Fortanix Code. You can close this tab.")
           signal.removeEventListener("abort", abort)
           resolve(value)
         })

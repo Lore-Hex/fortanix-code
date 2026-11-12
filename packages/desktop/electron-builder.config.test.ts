@@ -13,9 +13,9 @@ import { CLI_BINARIES, nodePtyPackage } from "./scripts/utils"
 const { FileMatcher } = createRequire(import.meta.resolve("electron-builder"))("app-builder-lib/out/fileMatcher")
 
 const channels = [
-  { channel: "dev", appId: "com.trustedrouter.cowork.opencodedev" },
-  { channel: "beta", appId: "com.trustedrouter.cowork.opencodebeta" },
-  { channel: "prod", appId: "com.trustedrouter.cowork.opencodedesktop" },
+  { channel: "dev", appId: "com.trustedrouter.fortanixcode.dev" },
+  { channel: "beta", appId: "com.trustedrouter.fortanixcode.beta" },
+  { channel: "prod", appId: "com.trustedrouter.fortanixcode" },
 ] as const
 
 function load(channel: string, target?: string): Configuration {
@@ -50,13 +50,13 @@ function trimFilter(dir: string, config: Configuration) {
 test.each(channels)("channel identity for $channel", ({ channel, appId }) => {
   const config = load(channel)
   expect(config.appId).toBe(appId)
-  expect(config.productName).toStartWith("Trusted Cowork")
+  expect(config.productName).toStartWith("Fortanix Code")
   expect(config.mac?.hardenedRuntime).toBe(true)
   expect(config.mac?.notarize).toBe(true)
   expect(config.afterPack).toBeFunction()
-  expect(config.protocols).toEqual({ name: "Trusted Cowork", schemes: ["trcc"] })
+  expect(config.protocols).toEqual({ name: "Fortanix Code", schemes: ["fortanix-code"] })
   if (channel !== "dev")
-    expect(config.publish).toMatchObject({ provider: "github", owner: "Lore-Hex", repo: "confidential-cowork-desktop" })
+    expect(config.publish).toMatchObject({ provider: "github", owner: "Lore-Hex", repo: "fortanix-code" })
   expect(config.extraMetadata?.desktopName).toBe(`${appId}.desktop`)
   expect(config.linux?.executableName).toBe(appId)
   expect(config.linux?.desktop?.entry?.StartupWMClass).toBe(appId)

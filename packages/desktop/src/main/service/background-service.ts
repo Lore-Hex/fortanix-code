@@ -3,7 +3,7 @@ export * as BackgroundService from "./background-service"
 import { app } from "electron"
 import { Context, Effect, Layer, Semaphore } from "effect"
 import { confidentialAccount } from "../confidential-account"
-import { confidentialEnvironment, confidentialRuntimeConfig } from "../confidential-runtime"
+import { confidentialEnvironment } from "../confidential-runtime"
 import { setConfidentialSidecar } from "../confidential-network"
 import { Shutdown } from "../lifecycle/shutdown"
 import { BackgroundServiceState } from "./background-service-state"
@@ -37,14 +37,11 @@ export const layer = Layer.effect(
         return yield* Effect.tryPromise(async () => {
           await running?.stop()
           const bridge = await account.bridge
-          const models = await bridge.models()
-          running = await startConfidentialProcess(
-            resolved.command,
-            confidentialEnvironment(
-              app.getPath("userData"),
-              confidentialRuntimeConfig(bridge.url, bridge.token, models),
-            ),
-          )
+          const { TRCC_CONFIG, ...environment } = confidentialEnvironment(app.getPath("userData"), "")
+          running = await startConfidentialProcess(resolved.command, {
+            ...environment,
+            TR_FORTANIX_CONFIG: JSON.stringify({ baseURL: bridge.url, token: bridge.token }),
+          })
           const ready = { url: running.url, password: running.password }
           setConfidentialSidecar(ready.url)
           SidecarCredentials.set(ready)
