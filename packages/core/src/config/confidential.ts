@@ -2,6 +2,7 @@ export * as ConfidentialConfig from "./confidential.js"
 
 import { Schema } from "effect"
 import { Document, Info } from "@opencode/schema/config"
+import { fortanixDocument } from "./fortanix.js"
 
 const Input = Schema.Struct({
   baseURL: Schema.String,
@@ -12,8 +13,11 @@ const Input = Schema.Struct({
 // Capture once, before tools can mutate their inherited environment. This is a
 // capability for the local bridge, never the user's TrustedRouter credential.
 const captured = process.env.TRCC_CONFIG
-export const enabled = captured !== undefined
-if (enabled) delete process.env.TRCC_CONFIG
+const fortanix = process.env.TR_FORTANIX_CONFIG
+if (captured !== undefined && fortanix !== undefined) throw new Error("Conflicting runtime capabilities")
+export const enabled = captured !== undefined || fortanix !== undefined
+delete process.env.TRCC_CONFIG
+delete process.env.TR_FORTANIX_CONFIG
 
 export function document(value: string) {
   const input = Schema.decodeUnknownSync(Schema.fromJsonString(Input))(value)
@@ -71,6 +75,7 @@ export function document(value: string) {
 }
 
 export function current() {
+  if (fortanix !== undefined) return (cached ??= fortanixDocument(fortanix))
   if (captured === undefined) return undefined
   return (cached ??= document(captured))
 }

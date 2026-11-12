@@ -1,4 +1,49 @@
-# Trusted Cowork
+# Fortanix Code
+
+An OpenCode coding agent pinned to **GLM 5.3 Flash on Fortanix through TrustedRouter**.
+
+Every model request uses `fortanix/glm-5.3-flash` at `https://api.trustedrouter.com/v1`,
+with `provider.only: ["fortanix"]` and `allow_fallbacks: false`. Other models and
+providers are rejected. Native tool calls and streaming are preserved.
+
+This is a separate terminal-agent variant, not the signed Trusted Cowork desktop
+release. It does not change that app or its profile. No signed Fortanix Code
+desktop package is published yet.
+
+## Run Fortanix Code
+
+Currently built locally on Apple Silicon macOS. Requires Python 3, Bun 1.4.2 on
+PATH, and Node 24 or newer for development.
+
+```sh
+bun install --frozen-lockfile
+cd packages/cli
+bun run script/build.ts --single --skip-install --skip-web-ui
+cd ../..
+python3 fortanix-code.py
+```
+
+Enter your TrustedRouter key at the hidden prompt. It is not saved or bundled.
+The bridge retains the key; OpenCode receives a temporary local capability.
+The profile is separate at `~/.local/share/fortanix-code`. Local tools require
+approval. Approved shell commands can access files and the network: this is not
+an operating-system sandbox.
+
+## Fortanix Privacy and Verification
+
+The current route is advertised as zero data retention, **not verified E2EE
+confidential inference**. Source files selected for review go through
+TrustedRouter to Fortanix. Do not interpret this variant as offering the
+confidential-route guarantee described in the legacy desktop documentation below.
+
+On November 12, 2026, a live native-tool call and tool-result follow-up succeeded
+on this exact model. Both calls reported one Fortanix candidate and zero
+fallbacks, despite the catalog advertising no tools. This does not establish
+reliability for every coding task.
+
+## Legacy Trusted Cowork Desktop
+
+The following documents the separate base product, not this Fortanix variant.
 
 A macOS desktop agent built on OpenCode, using confidential models through TrustedRouter.
 

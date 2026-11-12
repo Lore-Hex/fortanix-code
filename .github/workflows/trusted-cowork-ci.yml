@@ -1,7 +1,7 @@
-name: Trusted Cowork CI
+name: Fortanix Code CI
 on:
   push:
-    branches: [main, confidential-desktop, cowork-v2-port, cowork-v2-release]
+    branches: [main]
   pull_request:
   workflow_dispatch:
 permissions:
@@ -50,4 +50,5 @@ jobs:
         run: |
           bun run build
           bun scripts/confidential-runtime-smoke.ts
+          bun scripts/fortanix-runtime-smoke.ts
           xvfb-run -a bun scripts/confidential-desktop-smoke.ts
