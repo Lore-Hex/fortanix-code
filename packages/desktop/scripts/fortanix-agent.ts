@@ -3,15 +3,17 @@ import { homedir } from "node:os"
 import { spawn } from "node:child_process"
 import { startFortanixBridge } from "./fortanix-bridge"
 import { confidentialEnvironment } from "../src/main/confidential-runtime"
+import { fortanixArguments } from "../src/main/fortanix-launch"
 
 const key = process.env.TR_FORTANIX_API_KEY
 delete process.env.TR_FORTANIX_API_KEY
 if (!key) throw new Error("Use the fortanix-code.py launcher to enter your key privately")
+const args = fortanixArguments(process.argv.slice(2))
 const bridge = startFortanixBridge(key)
 const root = join(homedir(), ".local/share/fortanix-code")
 const { TRCC_CONFIG, ...env } = confidentialEnvironment(root, "")
 const binary = resolve(import.meta.dirname, "../../cli/dist/cli-darwin-arm64/bin/opencode")
-const child = spawn(binary, process.argv.slice(2), {
+const child = spawn(binary, args, {
   stdio: "inherit",
   env: {
     ...process.env,
